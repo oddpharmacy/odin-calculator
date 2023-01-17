@@ -39,12 +39,19 @@ h1 {
 .row1,
 .row2,
 .row3,
-.row4 {
+.row4,
+.row5 {
     display: flex;
     flex-grow: 1;
-    justify-content: space-between;
+    justify-content: space-evenly;
     width: auto;
     background-color: white;
+    border-radius: 10px;
+}
+
+.row1 > button {
+    font-size: 20px;
+    flex-basis: 0;
 }
 
 button {
@@ -65,4 +72,18 @@ button:hover {
 
 button:active {
     transform: translateY(2px);
+}
+
+.row5left,
+.row5right {
+    display: flex;
+    flex: 1;
+}
+
+.row5right {
+    margin-left: 7px
+}
+
+.row5right > button {
+    flex-basis: 100%;
 }
