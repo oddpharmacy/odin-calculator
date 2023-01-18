@@ -28,12 +28,22 @@ h1 {
     background-color: white;
 }
 
-.display {
+.disContainer {
     width: auto;
-    height: 90px;
+    height: 40px;
     background-color: lightgray;
     border: 15px solid whitesmoke;
     border-radius: 10px;
+    display: flex;
+    padding: 20px;
+}
+
+.display {
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-family: 'Quantico', sans-serif;
+    font-size: 35px;
 }
 
 .row1,
@@ -75,4 +85,3 @@ button:active {
     flex: 1;
     flex-basis: 100%;
 }
-
