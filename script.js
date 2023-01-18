@@ -2,14 +2,17 @@
 // populate display function
 let display = document.querySelector('.display');
 let displayValue;
+let previousValue;
 let number = document.querySelectorAll('.number');
 
 function popDisplay(val) {
     val.addEventListener('click', function(event) {
-        display.innerHTML = val.textContent;
-        displayValue = Number(display.innerHTML);
+        if (display.innerHTML == "0") {
+            display.innerHTML = display.innerHTML.substring(1);
+        }
+        display.innerHTML += val.textContent;
+        return displayValue = display.innerHTML;
     })
-    return val.textContent;
 }
 
 for (let i = 0; i < number.length; i++) {
@@ -19,11 +22,12 @@ for (let i = 0; i < number.length; i++) {
 // operator press
 let operatorChoice;
 let operators = document.querySelectorAll('.operator');
+let operatorClicked = false;
 
 function operatorClick(op) {
     op.addEventListener('click', function(event) {
         operatorChoice = op.textContent;
-        console.log(operatorChoice);
+        return operatorClicked = true;
     })
 }
 
@@ -31,45 +35,8 @@ for (let i = 0; i < operators.length; i++) {
     operatorClick(operators[i]);
 }
 
-// function add() {
-//     let total = 0;
-//     for (argument in arguments) {
-//         total += argument;
-//     }
-//     return total;
-// }
 
-// function subtract() {
-//     let total = 0;
-//     for (argument in arguments) {
-//         if (total == 0) {
-//             total = argument;
-//             continue;
-//         }
-//         total -= argument;
-//     }
-//     return total;
-// }
 
-// function multiply() {
-//     let total = 1;
-//     for (argument in arguments) {
-//         total *= argument;
-//     }
-//     return total;
-// }
-
-// function divide() {
-//     let total = 0;
-//     for (argument in arguments) {
-//         if (total == 0) {
-//             total = argument;
-//             continue;
-//         }
-//         total /= argument;
-//     }
-//     return total;
-// }
 
 function add(a, b) {
     return a + b;
@@ -89,6 +56,26 @@ function divide (a, b) {
 
 function operate(op, a, b) {
     // if op is equal to id/class element of + (for example) call add()
+    switch (true) {
+        case (op == '+'):
+            displayValue = add(a, b);
+            break;
+
+        case (op == '-'):
+            displayValue = subtract(a, b);
+            break;
+
+        case (op == 'x'):
+            displayValue = multiply(a, b);
+            break;
+
+        case (op == '÷'):
+            displayValue = divide(a, b);
+            break;
+
+        default:
+            break;
+    }
 
 }
 
