@@ -1,10 +1,9 @@
+// on click change display text to number
+// populate display function
 let display = document.querySelector('.display');
 let displayValue;
 let number = document.querySelectorAll('.number');
 
-
-// on click change display text to number
-// populate display function
 function popDisplay(val) {
     val.addEventListener('click', function(event) {
         display.innerHTML = val.textContent;
@@ -17,7 +16,20 @@ for (let i = 0; i < number.length; i++) {
     displayValue = popDisplay(number[i]);
 }
 
+// operator press
+let operatorChoice;
+let operators = document.querySelectorAll('.operator');
 
+function operatorClick(op) {
+    op.addEventListener('click', function(event) {
+        operatorChoice = op.textContent;
+        console.log(operatorChoice);
+    })
+}
+
+for (let i = 0; i < operators.length; i++) {
+    operatorClick(operators[i]);
+}
 
 // function add() {
 //     let total = 0;
