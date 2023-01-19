@@ -4,19 +4,33 @@ let display = document.querySelector('.display');
 let displayValue;
 let previousValue;
 let number = document.querySelectorAll('.number');
+let code;
+let numberClicked;
+
 
 function popDisplay(val) {
     val.addEventListener('click', function(event) {
+        displayFont(35);
         if (display.innerHTML == "0") {
             display.innerHTML = display.innerHTML.substring(1);
         }
+        else if (code == "01") {
+            code = "inactive";
+            display.innerHTML = '';
+        }
+        numberClicked = true;
         display.innerHTML += val.textContent;
         return displayValue = display.innerHTML;
     })
 }
 
 for (let i = 0; i < number.length; i++) {
-    displayValue = popDisplay(number[i]);
+    popDisplay(number[i]);
+}
+
+// display prop
+function displayFont(size) {
+    display.style.fontSize = `${size}px`;
 }
 
 // operator press
@@ -26,8 +40,24 @@ let operatorClicked = false;
 
 function operatorClick(op) {
     op.addEventListener('click', function(event) {
-        operatorChoice = op.textContent;
-        return operatorClicked = true;
+        if (operatorClicked == false && previousValue == undefined) {
+            console.log("wuh");
+            previousValue = displayValue;
+            code = "01";
+            operatorClicked = true;
+            numberClicked = false;
+        }
+        else if (operatorClicked == true && numberClicked == true) {
+            if (previousValue != undefined && displayValue != undefined && operatorChoice != undefined) {
+                console.log('hi');
+                code = "01";
+                result();
+                previousValue = display.innerHTML;
+                numberClicked = false;
+            }
+        }
+        operatorChoice = op.textContent;  
+        op.classList.add("operatorStyle");
     })
 }
 
@@ -36,6 +66,35 @@ for (let i = 0; i < operators.length; i++) {
 }
 
 
+// calculate when = is pressed
+const equal = document.querySelector('.equal');
+
+function result() {
+    display.innerHTML = operate(operatorChoice, Number(previousValue), Number(displayValue));
+    display.innerHTML = displayValue;
+}
+
+function checkEqual(eq) {
+    eq.addEventListener('click', function(event) {
+        if (previousValue == '0' && displayValue == '0' && operatorChoice == '÷') {
+            console.log('oops');
+            displayFont(20);
+            display.innerHTML = '⋆ ˚｡⋆୨୧˚do u even math? ૮ ˶ᵔ ᵕ ᵔ˶ ა♡';
+            previousValue = undefined;
+            numberClicked = false;
+        }
+        else if (previousValue != undefined && displayValue != undefined && operatorChoice != undefined) {
+            console.log('huh');
+            result();
+            operatorClicked = false;
+            code = "01";
+            operatorChoice = undefined;
+            numberClicked = false;
+        }
+    })
+}
+
+checkEqual(equal);
 
 
 function add(a, b) {
@@ -55,7 +114,7 @@ function divide (a, b) {
 }
 
 function operate(op, a, b) {
-    // if op is equal to id/class element of + (for example) call add()
+    
     switch (true) {
         case (op == '+'):
             displayValue = add(a, b);
@@ -79,7 +138,14 @@ function operate(op, a, b) {
 
 }
 
-// let plus = document.querySelector('.plus');
-// let minus = document.querySelector('.minus');
-// let divide = document.querySelector('.divide');
-// let multiply = document.querySelector('.multiply');
+// clear
+const ac = document.querySelector('.clear');
+
+function clear() {
+    ac.addEventListener('click', function(event) {
+        displayValue = undefined;
+        previousValue = undefined;
+        display.innerHTML = "0";
+    })
+}
+clear();
