@@ -14,6 +14,9 @@ function popDisplay(val) {
         if (display.innerHTML == "0") {
             display.innerHTML = display.innerHTML.substring(1);
         }
+        else if (display.innerHTML.length >= 15) {
+            return;
+        }
         else if (code == "01") {
             code = "inactive";
             display.innerHTML = '';
@@ -33,6 +36,23 @@ function displayFont(size) {
     display.style.fontSize = `${size}px`;
 }
 
+// point button for decimals
+let point = document.querySelector('.point');
+let havePoint = false;
+
+function decPoint(point) {
+    point.addEventListener('click', function(event) {
+        if (numberClicked = false || havePoint == true) {
+            return;
+        }
+        display.innerHTML += point.textContent;
+        havePoint = true;
+        return displayValue = display.innerHTML;
+    })
+}
+
+decPoint(point);
+
 // operator press
 let operatorChoice;
 let operators = document.querySelectorAll('.operator');
@@ -41,21 +61,20 @@ let operatorClicked = false;
 function operatorClick(op) {
     op.addEventListener('click', function(event) {
         if (operatorClicked == false && previousValue == undefined) {
-            console.log("wuh");
             previousValue = displayValue;
             code = "01";
-            operatorClicked = true;
             numberClicked = false;
         }
         else if (operatorClicked == true && numberClicked == true) {
             if (previousValue != undefined && displayValue != undefined && operatorChoice != undefined) {
-                console.log('hi');
-                code = "01";
                 result();
-                previousValue = display.innerHTML;
+                code = "01";
+                previousValue = displayValue;
                 numberClicked = false;
             }
         }
+        havePoint = false;
+        operatorClicked = true;
         operatorChoice = op.textContent;  
         op.classList.add("operatorStyle");
     })
@@ -82,14 +101,17 @@ function checkEqual(eq) {
             display.innerHTML = '⋆ ˚｡⋆୨୧˚do u even math? ૮ ˶ᵔ ᵕ ᵔ˶ ა♡';
             previousValue = undefined;
             numberClicked = false;
+            havePoint = false;
         }
         else if (previousValue != undefined && displayValue != undefined && operatorChoice != undefined) {
             console.log('huh');
             result();
+            previousValue = displayValue;
             operatorClicked = false;
             code = "01";
             operatorChoice = undefined;
             numberClicked = false;
+            havePoint = false;
         }
     })
 }
@@ -146,6 +168,17 @@ function clear() {
         displayValue = undefined;
         previousValue = undefined;
         display.innerHTML = "0";
+        numberClicked = false;
+        operatorClicked = false;
+        operatorChoice = undefined;
+        havePoint = false;
+        code = "inactive";
     })
 }
 clear();
+
+
+// round answers
+function roundAns(num) {
+    Math.round((num + Number.EPSILON) * 100 ) / 100;
+}
