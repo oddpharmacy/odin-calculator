@@ -1,7 +1,8 @@
-// on click change display text to number
-// populate display function
+// create display
 let display = document.querySelector('.display');
 let displayValue;
+
+// populate display upon button clicks
 let previousValue;
 let number = document.querySelectorAll('.number');
 let code;
@@ -11,19 +12,19 @@ let numberClicked;
 function popDisplay(val) {
     val.addEventListener('click', function(event) {
         displayFont(35);
-        if (display.innerHTML == "0") {
-            display.innerHTML = display.innerHTML.substring(1);
+        if (display.innerText == "0") {
+            display.innerText = display.innerText.substring(1);
         }
-        else if (display.innerHTML.length >= 15) {
+        else if (display.innerText.length >= 15 && operatorClicked == false) {
             return;
         }
         else if (code == "01") {
             code = "inactive";
-            display.innerHTML = '';
+            display.innerText = '';
         }
         numberClicked = true;
-        display.innerHTML += val.textContent;
-        return displayValue = display.innerHTML;
+        display.innerText += val.textContent;
+        return displayValue = display.innerText;
     })
 }
 
@@ -45,9 +46,9 @@ function decPoint(point) {
         if (numberClicked = false || havePoint == true) {
             return;
         }
-        display.innerHTML += point.textContent;
+        display.innerText += point.textContent;
         havePoint = true;
-        return displayValue = display.innerHTML;
+        return displayValue = display.innerText;
     })
 }
 
@@ -84,27 +85,24 @@ for (let i = 0; i < operators.length; i++) {
     operatorClick(operators[i]);
 }
 
-
-// calculate when = is pressed
+// calculate result
 const equal = document.querySelector('.equal');
 
 function result() {
-    display.innerHTML = operate(operatorChoice, Number(previousValue), Number(displayValue));
-    display.innerHTML = displayValue;
+    displayValue = operate(operatorChoice, Number(previousValue), Number(displayValue));
+    display.innerText = roundAns(displayValue);
 }
 
 function checkEqual(eq) {
     eq.addEventListener('click', function(event) {
         if (previousValue == '0' && displayValue == '0' && operatorChoice == '÷') {
-            console.log('oops');
             displayFont(20);
-            display.innerHTML = '⋆ ˚｡⋆୨୧˚do u even math? ૮ ˶ᵔ ᵕ ᵔ˶ ა♡';
+            display.innerText = '⋆ ˚｡⋆୨୧˚impossible ૮ ˶ᵔ ᵕ ᵔ˶ ა♡';
             previousValue = undefined;
             numberClicked = false;
             havePoint = false;
         }
         else if (previousValue != undefined && displayValue != undefined && operatorChoice != undefined) {
-            console.log('huh');
             result();
             previousValue = displayValue;
             operatorClicked = false;
@@ -119,45 +117,20 @@ function checkEqual(eq) {
 checkEqual(equal);
 
 
-function add(a, b) {
-    return a + b;
-}
-
-function subtract(a, b) {
-    return a - b;
-}
-
-function multiply (a, b) {
-    return a * b;
-}
-
-function divide (a, b) {
-    return a / b;
-}
-
 function operate(op, a, b) {
-    
     switch (true) {
         case (op == '+'):
-            displayValue = add(a, b);
-            break;
+            return a + b;
 
         case (op == '-'):
-            displayValue = subtract(a, b);
-            break;
+            return a - b;
 
         case (op == 'x'):
-            displayValue = multiply(a, b);
-            break;
+            return a * b;
 
         case (op == '÷'):
-            displayValue = divide(a, b);
-            break;
-
-        default:
-            break;
+            return a / b;
     }
-
 }
 
 // clear
@@ -167,12 +140,13 @@ function clear() {
     ac.addEventListener('click', function(event) {
         displayValue = undefined;
         previousValue = undefined;
-        display.innerHTML = "0";
+        display.innerText = "0";
         numberClicked = false;
         operatorClicked = false;
         operatorChoice = undefined;
         havePoint = false;
         code = "inactive";
+        displayFont(35);
     })
 }
 clear();
@@ -180,5 +154,5 @@ clear();
 
 // round answers
 function roundAns(num) {
-    Math.round((num + Number.EPSILON) * 100 ) / 100;
+    return Math.round((num + Number.EPSILON) * 10000000000000 ) / 10000000000000;
 }
