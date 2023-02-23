@@ -1,6 +1,6 @@
 // create display
 let display = document.querySelector('.display');
-let displayValue;
+let displayValue = 0;
 
 // populate display upon button clicks
 let previousValue;
@@ -156,10 +156,8 @@ const opp = document.querySelector('.opp');
 
 function negPos() {
     opp.addEventListener('click', function(event) {
-        if (displayValue != null) {
-            displayValue = -displayValue; 
-            display.innerText = displayValue;
-        }
+        displayValue = -displayValue; 
+        display.innerText = displayValue;
     })
 }
 
