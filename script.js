@@ -151,6 +151,31 @@ function clear() {
 }
 clear();
 
+// negative to positive and vice versa
+const opp = document.querySelector('.opp');
+
+function negPos() {
+    opp.addEventListener('click', function(event) {
+        if (displayValue != null) {
+            displayValue = -displayValue; 
+            display.innerText = displayValue;
+        }
+    })
+}
+
+negPos();
+
+// percentage
+const percentage = document.querySelector('.percentage');
+
+function percent() {
+    percentage.addEventListener('click', function(event) {
+        displayValue = displayValue * 0.01;
+        display.innerText = displayValue;
+    })
+}
+
+percent();
 
 // round answers
 function roundAns(num) {
